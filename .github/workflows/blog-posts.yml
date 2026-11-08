@@ -1,0 +1,22 @@
+name: Derniers articles de blog
+
+# Met à jour la section « Latest blog posts » du README à partir du flux Medium.
+# Dépôt public : les minutes GitHub Actions ne sont pas facturées.
+on:
+  schedule:
+    - cron: '0 6 * * 1' # chaque lundi à 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/blog-post-workflow@v1
+        with:
+          feed_list: 'https://medium.com/feed/@merdielongo9'
+          max_post_count: 5
+          commit_message: 'docs: mise à jour des derniers articles de blog'
